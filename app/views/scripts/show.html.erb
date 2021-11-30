@@ -1,0 +1,48 @@
+<p id="notice"><%= notice %></p>
+
+<h1><%= @script.name %> Script Details</h1>
+<p>
+  <b>Scheduled at: </b><%= @script.schedule.present? ? @script.schedule.in_time_zone("Central Time (US & Canada)") : "<b>Not Scheduled</b>".html_safe %>
+</p>
+
+<p>
+  <b>Repeat at (Hours): </b> <%= @script.repeat_at %>
+</p>
+
+<h3>Input files</h3>
+<div>
+	<% if input_file_links(@script.name).blank? %>
+		<p>Files not availables</p>
+	<% end %>
+	<% input_file_links(@script.name).each do |file_link| %>
+		<li>
+			<%= file_name(file_link) %>
+		</li>
+	<% end %>
+</div>
+
+<br>
+
+<div>
+	<h3>Available Output files links</h3>
+	<% if file_links(@script.name).blank? %>
+		<p>Files not availables</p>
+	<% end %>
+	<p></p>
+	<% file_links(@script.name).each do |file_link| %>	
+		<li>
+			<%= link_to file_name(file_link), download_output_file_path(file_name: send_smart_path(file_link)), download: true %>
+		</li>
+	<% end %> 
+</div>
+
+
+<div>
+	<%= link_to 'Edit', edit_script_path(@script) %> |
+	<%= link_to 'Back', scripts_path %>
+</div>
+
+<div>
+	<%#= link_to 'Destroy', @script, method: :delete, data: { confirm: 'Are you sure?' } %>
+</div>
+

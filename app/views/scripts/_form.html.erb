@@ -1,0 +1,40 @@
+<%= form_with(model: script, local: true) do |form| %>
+  <% if script.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(script.errors.count, "error") %> prohibited this script from being saved:</h2>
+
+      <ul>
+        <% script.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :name %>
+    <%= form.text_field :name, class: 'form-control' %>
+    <p><b>Note:</b> If you update scraper name then you have to change foders name too</p>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :schedule %>
+    <%= form.datetime_select :schedule, discard_year: true, start_date: Time.now.day, prompt: {day: 'Choose day', hour: "Choose hour" }, default: Time.now + 10.minutes, selected: Date.today, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :repeat_at %>
+    <%= form.select :repeat_at, 
+      [['Not repeat', nil], ['6 hours', 6], ['12 hours', 12], ['1 day', 24]]
+    %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :input_file %>
+    <%= form.file_field :input_file, :multiple => true, accept: ".xlsx, .xls, .csv, .txt", class: 'form-control-file' %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
